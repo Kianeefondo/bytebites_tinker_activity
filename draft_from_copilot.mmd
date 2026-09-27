@@ -1,0 +1,42 @@
+classDiagram
+    class Customer {
+        -String name
+        -List~Item~ purchaseHistory
+        +Customer(name: String)
+        +getName() String
+        +getPurchaseHistory() List~Item~
+        +addPurchase(item: Item) void
+        +isVerifiedCustomer() boolean
+    }
+
+    class Item {
+        -String name
+        -double price
+        -Category category
+        -double popularityRating
+        +Item(name: String, price: double, category: Category, popularityRating: double)
+        +getName() String
+        +getPrice() double
+        +getCategory() Category
+        +getPopularityRating() double
+    }
+
+    class Category {
+        -String name
+        +Category(name: String)
+        +getName() String
+        +filterItems(items: List~Item~) List~Item~
+    }
+
+    class Transaction {
+        -List~Item~ items
+        +Transaction()
+        +addItem(item: Item) void
+        +removeItem(item: Item) void
+        +getItems() List~Item~
+        +getTotalCost() double
+    }
+
+    Customer "1" --> "0..*" Item : purchaseHistory
+    Item --> "1" Category : category
+    Transaction "1" --> "1..*" Item : contains
