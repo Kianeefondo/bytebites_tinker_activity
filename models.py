@@ -97,3 +97,51 @@ class Transaction:
             total += item.get_price()
         return total
 
+
+# Example scenario
+if __name__ == "__main__":
+    drinks = Category("Drinks")
+    desserts = Category("Desserts")
+
+    soda = Item("Large Soda", 2.50, drinks, 4.7)
+    tea = Item("Iced Tea", 2.00, drinks, 4.5)
+    cookie = Item("Chocolate Cookie", 3.25, desserts, 4.9)
+    cake = Item("Vanilla Cake", 4.75, desserts, 4.8)
+
+    drinks.add_item(soda)
+    drinks.add_item(tea)
+    desserts.add_item(cookie)
+    desserts.add_item(cake)
+
+    # Filtering by category
+    drink_menu = drinks.filter_items()
+    dessert_menu = desserts.filter_items()
+
+    # Sorting by price (lowest to highest)
+    sorted_drinks = sorted(drink_menu, key=lambda item: item.get_price())
+    sorted_desserts = sorted(dessert_menu, key=lambda item: item.get_price(), reverse=True)
+
+    # Customer purchase history
+    customer = Customer("Jordan")
+    customer.add_purchase(soda)
+    customer.add_purchase(cookie)
+
+    # Build a transaction
+    order = Transaction()
+    order.add_item(soda)
+    order.add_item(cookie)
+    order.add_item(tea)
+
+    print("Customer:", customer.get_name())
+    print("Purchase history:", [item.get_name() for item in customer.get_purchase_history()])
+    print("Verified customer:", customer.is_verified_customer())
+
+    print("Drinks menu:", [item.get_name() for item in drink_menu])
+    print("Desserts menu:", [item.get_name() for item in dessert_menu])
+
+    print("Sorted drinks by price:", [item.get_name() for item in sorted_drinks])
+    print("Sorted desserts by price (high to low):", [item.get_name() for item in sorted_desserts])
+
+    print("Order items:", [item.get_name() for item in order.get_items()])
+    print("Order total:", order.calculate_total())
+
